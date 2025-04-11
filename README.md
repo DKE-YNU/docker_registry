@@ -38,7 +38,7 @@
 
 5. 点击 "Apply & Restart" 按钮应用更改并重启 Docker Desktop
 
-![Docker Desktop 配置图](https://example.com/docker-desktop-config.png)
+![Docker Desktop 配置图](WX20250411-121917@2x.png)
 
 ### WSL 环境 (Ubuntu 24.04)
 
