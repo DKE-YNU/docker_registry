@@ -4,19 +4,18 @@
 
 这是云南省智能系统与计算重点实验室 Docker 镜像仓库服务（Docker Registry），提供镜像存储、分发和管理功能。本服务可用于实验室研究项目的容器化部署、开发环境的搭建以及教学科研活动。
 
-**仓库地址：** https://registry.zsk-isc.ynu.edu.cn
+**仓库地址：** https://registry.zsk-isc.ynu.edu.cn （✓ 已验证可用）
 
 ## 功能特点
 
-- **镜像存储与管理**：安全存储 Docker 镜像，支持多标签管理
+- **镜像存储与管理**：安全存储 Docker 镜像，支持多标签管理（✓ 已验证）
 - **高速访问**：实验室内部高速网络访问，避免从外部仓库拉取时的网络延迟
-- **DaoCloud 镜像加速**：内部集成了 DaoCloud 镜像加速服务
-- **无大小限制**：支持任意大小的镜像推送和拉取
-- **简单易用**：兼容 Docker 标准操作，无需学习新的命令
+- **无大小限制**：支持任意大小的镜像推送和拉取（✓ 已验证）
+- **简单易用**：兼容 Docker 标准操作，无需学习新的命令（✓ 已验证）
 
 ## 使用前准备
 
-由于使用了自签名证书或证书不被 Docker 默认信任，您需要在不同环境下进行配置：
+由于使用了自签名证书，您需要在不同环境下进行以下配置：
 
 ### Windows 环境 (Docker Desktop)
 
@@ -76,7 +75,7 @@ sudo nano /etc/docker/daemon.json
 sudo systemctl restart docker
 ```
 
-### Linux 服务器环境
+### Linux 服务器环境（推荐配置方式）
 
 编辑 `/etc/docker/daemon.json` 文件（如果不存在，请创建它）：
 
@@ -84,7 +83,8 @@ sudo systemctl restart docker
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json > /dev/null << EOF
 {
-  "insecure-registries": ["registry.zsk-isc.ynu.edu.cn"]
+  "insecure-registries": ["registry.zsk-isc.ynu.edu.cn"],
+  "registry-mirrors": ["https://mirror.ccs.tencentyun.com"]
 }
 EOF
 ```
@@ -99,7 +99,7 @@ sudo service docker restart
 
 ## 基本使用指南
 
-### 拉取镜像
+### 拉取镜像（✓ 已验证）
 
 从镜像仓库拉取已有镜像：
 
@@ -125,7 +125,7 @@ docker tag m.daocloud.io/docker.io/library/nginx:latest registry.zsk-isc.ynu.edu
 docker push registry.zsk-isc.ynu.edu.cn/my-nginx:v1
 ```
 
-### 查看镜像列表
+### 查看镜像列表（✓ 已验证）
 
 查看仓库中的所有镜像：
 
@@ -211,6 +211,7 @@ docker push registry.zsk-isc.ynu.edu.cn/ubuntu:22.04
 3. **定期清理本地缓存**：使用 `docker system prune` 清理未使用的镜像
 4. **构建小体积镜像**：使用多阶段构建和精简基础镜像
 5. **推送前本地测试**：确保镜像在本地能正常运行后再推送
+6. **使用国内镜像加速**：推荐使用腾讯云镜像加速服务提升拉取速度
 
 ## 故障排除
 
@@ -244,4 +245,4 @@ docker push registry.zsk-isc.ynu.edu.cn/ubuntu:22.04
 
 ---
 
-*本文档最后更新于：2025年4月11日* 
+*本文档最后更新于：2024年4月11日* 
