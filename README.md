@@ -22,14 +22,17 @@
 1. 打开 Docker Desktop
 2. 点击右上角的⚙️图标进入设置
 3. 选择 "Docker Engine" 选项卡
-4. 在 JSON 配置中添加 "insecure-registries" 配置：
+4. 在 JSON 配置中添加以下配置：
 
 ```json
 {
+  "experimental": false,
   "insecure-registries": [
     "registry.zsk-isc.ynu.edu.cn"
   ],
-  // 其他现有设置...
+  "registry-mirrors": [
+    "https://docker.m.daocloud.io"
+  ]
 }
 ```
 
@@ -63,7 +66,8 @@ sudo nano /etc/docker/daemon.json
 
 ```json
 {
-  "insecure-registries": ["registry.zsk-isc.ynu.edu.cn"]
+  "insecure-registries": ["registry.zsk-isc.ynu.edu.cn"],
+  "registry-mirrors": ["https://docker.m.daocloud.io"]
 }
 ```
 
@@ -84,7 +88,7 @@ sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json > /dev/null << EOF
 {
   "insecure-registries": ["registry.zsk-isc.ynu.edu.cn"],
-  "registry-mirrors": ["https://mirror.ccs.tencentyun.com"]
+  "registry-mirrors": ["https://docker.m.daocloud.io"]
 }
 EOF
 ```
@@ -211,7 +215,7 @@ docker push registry.zsk-isc.ynu.edu.cn/ubuntu:22.04
 3. **定期清理本地缓存**：使用 `docker system prune` 清理未使用的镜像
 4. **构建小体积镜像**：使用多阶段构建和精简基础镜像
 5. **推送前本地测试**：确保镜像在本地能正常运行后再推送
-6. **使用国内镜像加速**：推荐使用腾讯云镜像加速服务提升拉取速度
+6. **使用国内镜像加速**：推荐使用 DaoCloud 镜像加速服务提升拉取速度
 
 ## 故障排除
 
