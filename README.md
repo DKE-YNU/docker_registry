@@ -247,6 +247,50 @@ docker push registry.zsk-isc.ynu.edu.cn/ubuntu:22.04
 - [Docker Desktop 文档](https://docs.docker.com/desktop/windows/)
 - [WSL 文档](https://learn.microsoft.com/zh-cn/windows/wsl/)
 
+## 附录：DaoCloud 二进制文件加速服务
+
+除了 Docker 镜像加速外，DaoCloud 还提供了二进制文件加速服务，可以加速下载各种常用工具：
+
+### 使用方法
+
+在原始 URL 前加入 `files.m.daocloud.io` 前缀即可使用加速服务。例如：
+
+```bash
+# 原始 URL
+wget https://get.helm.sh/helm-v3.9.1-linux-amd64.tar.gz
+
+# 加速后的 URL
+wget https://files.m.daocloud.io/get.helm.sh/helm-v3.9.1-linux-amd64.tar.gz
+```
+
+### 常用工具加速示例
+
+1. **安装 Helm**
+```bash
+export HELM_VERSION="v3.9.3"
+wget "https://files.m.daocloud.io/get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz"
+```
+
+2. **安装 KIND**
+```bash
+export KIND_VERSION="v0.22.0"
+curl -Lo ./kind https://files.m.daocloud.io/github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-linux-amd64
+```
+
+3. **安装 K9S**
+```bash
+export K9S_VERSION="v0.32.4"
+wget https://files.m.daocloud.io/github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_x86_64.tar.gz
+```
+
+4. **安装 Istio**
+```bash
+export ISTIO_VERSION="1.14.3"
+wget "https://files.m.daocloud.io/github.com/istio/istio/releases/download/${ISTIO_VERSION}/istio-${ISTIO_VERSION}-linux-amd64.tar.gz"
+```
+
+更多详情请访问：[DaoCloud 二进制文件加速](https://github.com/DaoCloud/public-binary-files-mirror)
+
 ---
 
 *本文档最后更新于：2024年4月11日* 
