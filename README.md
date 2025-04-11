@@ -16,9 +16,67 @@
 
 ## 使用前准备
 
-由于使用了自签名证书或证书不被 Docker 默认信任，您需要进行以下配置：
+由于使用了自签名证书或证书不被 Docker 默认信任，您需要在不同环境下进行配置：
 
-### 配置 Docker 客户端信任不安全的仓库
+### Windows 环境 (Docker Desktop)
+
+1. 打开 Docker Desktop
+2. 点击右上角的⚙️图标进入设置
+3. 选择 "Docker Engine" 选项卡
+4. 在 JSON 配置中添加 "insecure-registries" 配置：
+
+```json
+{
+  "insecure-registries": [
+    "registry.zsk-isc.ynu.edu.cn"
+  ],
+  // 其他现有设置...
+}
+```
+
+5. 点击 "Apply & Restart" 按钮应用更改并重启 Docker Desktop
+
+![Docker Desktop 配置图](https://example.com/docker-desktop-config.png)
+
+### WSL 环境 (Ubuntu 24.04)
+
+在 WSL 的 Ubuntu 24.04 中配置 Docker：
+
+1. 如果尚未安装 Docker，请先安装：
+
+```bash
+sudo apt update
+sudo apt install docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker $USER
+# 重新登录使用户组设置生效
+```
+
+2. 创建或编辑 Docker 配置文件：
+
+```bash
+sudo mkdir -p /etc/docker
+sudo nano /etc/docker/daemon.json
+```
+
+3. 添加以下内容：
+
+```json
+{
+  "insecure-registries": ["registry.zsk-isc.ynu.edu.cn"]
+}
+```
+
+4. 保存文件（Ctrl+O，然后 Enter，再按 Ctrl+X 退出）
+
+5. 重启 Docker 服务：
+
+```bash
+sudo systemctl restart docker
+```
+
+### Linux 服务器环境
 
 编辑 `/etc/docker/daemon.json` 文件（如果不存在，请创建它）：
 
@@ -80,6 +138,24 @@ curl -k https://registry.zsk-isc.ynu.edu.cn/v2/_catalog
 ```bash
 curl -k https://registry.zsk-isc.ynu.edu.cn/v2/nginx/tags/list
 ```
+
+## Windows 特定说明
+
+### Docker Desktop 镜像存储位置
+
+Docker Desktop 在 Windows 上的镜像默认存储在 WSL2 虚拟磁盘中。如果你需要保存磁盘空间：
+
+1. 打开 Docker Desktop 设置
+2. 进入 "Resources" > "WSL Integration"
+3. 配置资源限制和集成选项
+
+### WSL 与 Docker Desktop 集成
+
+如果您在 WSL 中工作，同时使用 Windows 的 Docker Desktop：
+
+1. 确保在 Docker Desktop 设置中启用了 WSL 集成
+2. 在 WSL 终端中可以直接使用 docker 命令而不需要额外安装
+3. Docker 配置（包括 insecure-registries）将从 Docker Desktop 继承
 
 ## 在 Kubernetes 中使用
 
@@ -156,13 +232,15 @@ docker push registry.zsk-isc.ynu.edu.cn/ubuntu:22.04
 
 ## 技术支持
 
-如遇到任何问题，请联系实验室系统管理员或发送邮件至：[管理员邮箱]
+如遇到任何问题，请联系实验室系统管理员或发送邮件至：hukuang@ynu.edu.cn
 
 ## 相关资源
 
 - [Docker 官方文档](https://docs.docker.com/)
 - [Kubernetes 官方文档](https://kubernetes.io/docs/home/)
 - [DaoCloud 镜像加速服务](https://github.com/DaoCloud/public-image-mirror)
+- [Docker Desktop 文档](https://docs.docker.com/desktop/windows/)
+- [WSL 文档](https://learn.microsoft.com/zh-cn/windows/wsl/)
 
 ---
 
