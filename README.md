@@ -237,7 +237,7 @@ docker push registry.zsk-isc.ynu.edu.cn/ubuntu:22.04
 
 ## 技术支持
 
-如遇到任何问题，请联系实验室系统管理员或发送邮件至：hukuang@ynu.edu.cn
+如遇到任何问题，请联系胡老师。
 
 ## 相关资源
 
