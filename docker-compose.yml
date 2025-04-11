@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  registry:
+    image: m.daocloud.io/docker.io/library/registry:2
+    ports:
+      - "16000:5000"
+    environment:
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+      REGISTRY_HTTP_HTTP2_DISABLED: "true"
+      REGISTRY_HTTP_READ_TIMEOUT: "300s"
+      REGISTRY_HTTP_WRITE_TIMEOUT: "300s"
+    volumes:
+      - ./data:/var/lib/registry
+    restart: always 
